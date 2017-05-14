@@ -145,10 +145,10 @@ class DHT11(object):
         Call the read method and return temperature and humidity informations.
         """
         self.read()
-        response =  {
-            'humidity': self.humidity,
-            'temperature': self.temperature
-        }
+        response =  dict(
+  	    sensor = "DHT11",
+            humidity = self.humidity,
+            temperature =  self.temperature)
         return response
 
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#/usr/bin/env python
 
 # reads sensor values from dallas ds1820b, DHT 11 and BMP085
 
@@ -44,8 +44,8 @@ def read_ds1820b():
     equals_pos = lines[1].find('t=')
     if equals_pos != -1:
         temp_string = lines[1][equals_pos+2:]
-        temp_c = float(temp_string) / 1000.0
-    return temp_c
+        temp_c = round(float(temp_string) / 1000.0,1)
+    return dict(sensor="ds1820b", temperature=temp_c)
 
 def read_DHT11():
     pi = pigpio.pi()
@@ -56,9 +56,16 @@ def read_DHT11():
     return response
 
 def read_BMP085():
-    sensor = BMP085.BMP085()
-    return [sensor.read_temperature(), sensor.read_pressure(), sensor.read_altitude(), sensor.read_sealevel_pressure()]
-
+    sensor = BMP085.BMP085(BMP085.BMP085_ULTRAHIGHRES)
+    height = 80
+    SLP = sensor.read_sealevel_pressure(height)
+    print(sensor.read_altitude(SLP))
+    return dict(
+		sensor="BMP085",
+		temperature=sensor.read_temperature(),
+		pressure=round(sensor.read_pressure()/100, 1),
+		altitude=round(sensor.read_altitude(SLP), 1), 
+		SLP=round(sensor.read_sealevel_pressure(height)/100, 1))
 
 print(read_ds1820b())
 print(read_DHT11())
