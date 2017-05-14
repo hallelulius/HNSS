@@ -146,9 +146,10 @@ class DHT11(object):
         """
         self.read()
         response =  dict(
-  	    sensor = "DHT11",
-            humidity = self.humidity,
-            temperature =  self.temperature)
+  	    sensor="'DHT11'",
+            humidity=self.humidity,
+            temperature= self.temperature,
+	    location="'living room'")
         return response
 
 

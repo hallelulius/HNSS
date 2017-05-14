@@ -45,7 +45,9 @@ def read_ds1820b():
     if equals_pos != -1:
         temp_string = lines[1][equals_pos+2:]
         temp_c = round(float(temp_string) / 1000.0,1)
-    return dict(sensor="ds1820b", temperature=temp_c)
+    return dict(sensor="'ds1820b'",
+		temperature=temp_c, 
+		location="'living room'")
 
 def read_DHT11():
     pi = pigpio.pi()
@@ -61,11 +63,12 @@ def read_BMP085():
     SLP = sensor.read_sealevel_pressure(height)
     print(sensor.read_altitude(SLP))
     return dict(
-		sensor="BMP085",
+		sensor="'BMP085'",
 		temperature=sensor.read_temperature(),
 		pressure=round(sensor.read_pressure()/100, 1),
 		altitude=round(sensor.read_altitude(SLP), 1), 
-		SLP=round(sensor.read_sealevel_pressure(height)/100, 1))
+		SLP=round(sensor.read_sealevel_pressure(height)/100, 1),
+		location="'living room'")
 
 print(read_ds1820b())
 print(read_DHT11())

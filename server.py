@@ -15,7 +15,7 @@ def response(data):
         return dict(
 	    ds1820b=sensorBoard.read_ds1820b(),
             DHT11=sensorBoard.read_DHT11(),
-            BMP085=sensorBoard.read_DHT11()
+            BMP085=sensorBoard.read_BMP085()
             )
     elif data == 'help':
         return ('I can send you: \n' +
