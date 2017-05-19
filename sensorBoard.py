@@ -6,9 +6,9 @@ import socket
 import os
 import datetime
 import time
-import DHT11 as DHT11
 import pigpio
 import Adafruit_BMP.BMP085 as BMP085
+import Adafruit_DHT 
 
 # ds1820b settings (temperature)
 os.system('modprobe w1-gpio')
@@ -50,12 +50,14 @@ def read_ds1820b():
 		location="'living room'")
 
 def read_DHT11():
-    pi = pigpio.pi()
     pin = 17
-    sensor = DHT11.DHT11(pi, pin)
-    response = sensor.next()
-    sensor.close()
-    return response
+    hum, temp = Adafruit_DHT.read_retry(11, pin)
+    if not hum == None:
+    	return dict(sensor="'DHT11'",
+	       		temperature = temp,
+			humidity = hum,
+			location = "'living room'"
+			)
 
 def read_BMP085():
     sensor = BMP085.BMP085(BMP085.BMP085_ULTRAHIGHRES)
