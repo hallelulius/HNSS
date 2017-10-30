@@ -1,8 +1,7 @@
 #!/usr/bin/python
 
-import Adafruit_BMP.BMP085 as BMP085 # Imports the BMP library
+import Adafruit_BMP.BMP085 as BMP085 
 
-# Create an 'object' containing the BMP180 data
 sensor = BMP085.BMP085()
 print 'Temp = {0:0.2f} *C'.format(sensor.read_temperature()) # Temperature in Celcius
 print 'Pressure = {0:0.2f} Pa'.format(sensor.read_pressure()) # The local pressure
